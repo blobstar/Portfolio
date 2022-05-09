@@ -1,4 +1,79 @@
 body{
-    background-color: rgb(252, 255, 232);
+    background-color: rgb(248, 248, 248);
     margin:0px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+#navbar{
+    height:90px;
+    width:100%;
+    background-color:rgb(255, 255, 255);
+    display:flex;
+    margin:0px;
+    top:0px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    justify-content:space-around;
+}
+.menu {
+    list-style-type:none;
+    display:flex;
+    align-items: center;
+    justify-content:space-evenly;
+}
+.nav-link{
+    text-decoration: none;
+    font-size:25px;
+    color:grey;
+    text-align:center;
+    margin:0px 10px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+.nav-link:hover {
+  color:black;
+}
+.bigbutton1 {
+  text-decoration: none;
+  background:    rgb(247,148,29);
+  border:        3px solid #ff9900;
+  border-radius: 11px;
+  padding:       20px 30px;
+  color:         #ffffff;
+  display:       inline-block;
+  font:          normal bold 26px/1 "Ubuntu", sans-serif;
+  text-align:    center;
+}
+.bigbutton2 {
+  text-decoration: none;
+  background:    #ffffff;
+  border:        3px solid #ff9900;
+  border-radius: 11px;
+  padding:       20px 30px;
+  color:         #ff9900;
+  display:       inline-block;
+  font:          normal bold 26px/1 "Ubuntu", sans-serif;
+  text-align:    center;
+}
+.headbox {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:50px;
+}
+#namebox {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+#orangeText {
+  color: rgb(247,148,29);
+}
+#pictobox {
+  display:flex;
+  justify-content:space-around;
+  padding:80px;
+}
+.picto {
+  display:flex;
+  flex-direction:column;
 }
