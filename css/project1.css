@@ -1,0 +1,11 @@
+#chart{
+    display: flex;
+    margin: 200px;
+    align-items: flex-start;
+  }
+  
+.countries:hover {
+    fill: orange !important;
+    cursor:pointer;
+}
+  
