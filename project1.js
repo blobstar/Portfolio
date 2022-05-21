@@ -10,12 +10,14 @@ const stateMap = [];
 let btns = document.getElementsByClassName("countries");
 Array.from(btns).forEach(function (i) {
     console.log(stateMap[i.id]); 
-  i.addEventListener('mouseenter', function() {
+  
+    i.addEventListener('mouseenter', function() {
     i.style.fill = 'orange';
     //console.log(i);
     d3.selectAll("rect")
     .filter(function(d) { return d.country == i.id; })
-    .style("fill", "orange"); 
+    .style("fill", "orange");
+    toolTipThingy(i.id);
   });
 
   i.addEventListener('mouseleave', function() {
@@ -28,6 +30,7 @@ Array.from(btns).forEach(function (i) {
         .style("fill", "black");
     } else {i.style.fill = 'orange';}
   });
+  
   i.addEventListener('click', function(){
     const state = stateMap[i.id];
     if (state){
@@ -40,6 +43,15 @@ Array.from(btns).forEach(function (i) {
     }
   });
 });
+
+
+
+function toolTipThingy(id){
+    var _el = document.getElementById('woo');
+ 	_el.style.top = event.clientY + "px";
+ 	_el.style.left = event.clientX + "px";
+    _el.innerHTML = id;
+}
 
 /* function hover(id) {
     var element = document.getElementById(id);
