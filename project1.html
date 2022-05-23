@@ -4,11 +4,18 @@
     <head>
         <title> dynamic representation of SADC countries population growth</title>
         <link rel="stylesheet" type="text/css" href="css/project1.css">
+        <!-- codepen scripts -->
+        <script src="codemirror/lib/codemirror.js"></script>
+        <link href="codemirror/lib/codemirror.css" rel="stylesheet"/>
+        <script src="codemirror/mode/javascript/javascript.js"></script>
+        <script src="codemirror/addon/edit/closetag.js"></script>
+        <link href="codemirror/theme/dracula.css" rel="stylesheet"/>
     </head>
     <body>
         <div id="woo" class="js--movey-thingy"></div>
-        <h1>Number of Niggers in sub-Saharan Africa</h1>
+        
         <div id ="chart" >
+            <h1>Population of SADC countries (2021)</h1>
             <svg class="charts" xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox = "0 0 1150 813" version = "1.1">
           <!-- svg generated using QGIS www.qgis.org -->
           <g id="shapefilesadc" class="map" inkscape:groupmode="layer" inkscape:label="shapefilesadc">
@@ -79,7 +86,189 @@
           <!-- QGIS extent for clipping, eg in Inkscape -->
           </svg>
           <svg class="chart"></svg>
-          </div>
+        </div>
+        <div id ="instructable">
+            <h1>Tutorial</h1>
+            <h2>Map</h2>
+            <p>The above map was made with data from <a href='https://www.naturalearthdata.com/about/'>Natural Earth Data</a> which as i understand is a labor of love by Nathaniel Vaughn, a really cool initiative that provides high quality map data free of charge. I then used that data and manipulated in QGIS which is used for editing maps essentially. A more in depth tutorial is needed to fully explain the lengthy process of creating such interactive SVG's. However for now we will focus on making the javascript (in conjunction with the d3 library) work - which is the real meat of this project.</p>
+            <h2>Bar Graph</h2>
+            <p>The Bar graph or Histogram as its sometimes known was made in JavaScript in conjunction with the d3 library which is used extensively when it comes to visualizing data, its especially useful when it comes to converting data objects such as csv's, tsv's, excel files or as in our case JSON files. We will be using d3 to plot population data of countries in the SADC (Southern African Development Community).</p>
+            <h2>Data</h2>
+            <p>The data used will be in JSON format as follows. Note that each json object contains two key-value pairs: one for the country name(String) and one for the population count(integer)</p>
+<textarea class = "jsonEditor">
+const dataset = 
+[{
+    "pop": 59308690,
+    "country": "South Africa"
+},
+{   
+    "pop": 2351625,
+    "country": "Botswana"
+},
+{   
+    "pop": 1160164,
+    "country": "eSwatini"
+},
+{   
+    "pop": 32866268,
+    "country": "Angola"
+},
+{
+    "pop": 869595,
+    "country": "Comoros"
+},
+{   
+    "pop": 89561404,
+    "country": "DRC"
+},
+{
+    "pop": 2142252,
+    "country": "Lesotho"
+},
+{
+    "pop": 27691019,
+    "country": "Madagascar"
+},
+{
+    "pop": 19129955,
+    "country": "Malawi"
+},
+{
+    "pop": 1265740,
+    "country": "Mauritius"
+},
+{
+    "pop": 31255435,
+    "country": "Mozambique"
+},
+{   "pop": 2540916,
+    "country": "Namibia"
+},
+{
+    "pop": 98462,
+    "country": "Seychelles"
+},
+{
+    "pop": 59734213,
+    "country": "Tanzania"
+},
+{
+    "pop": 18383956,
+    "country": "Zambia"
+},
+{
+    "pop": 14862927,
+    "country": "Zimbabwe"
+}];
+</textarea>
+            <p>Now that we've covered the basics of the three foundational elements of our web app let's delve into a little detail. First up we create the Bargraph.</p>
+            <h2>Creating the bar graph</h2>
+            <p>First we set up some basic parameters that dictate the overall size (in pixels) of our BarGraph and how we want that data mapped. Take note of the .domain and .range functions. Think of the domain is the real data value points of your data set, the first argument being the minimum data value shown and the second the maximum data. Think of the range as how you want that value expressed in terms of pixels, obviously it would be obscene to represent values of over tens of millions mapped 1:1 with pixels, this is why range comes in handy. I entered these in manually so you can get a better sense of how it works but if youre following along with your own code it may be wiser to parse through the data programmatically to find these values so that in the future if the dataset is updated it reflects visually without you having to manually shift some parameters around in your code.</p>
+            <p>here we encounter our first bit of d3 library syntax, we create a const called scale that maps to linear scale in our case, for other types of data such as financial data it may be useful to use a logarithmic scale, consult the d3 library to see which scale should best represent your data</p>
+<textarea class="jsEditor">
+const w = 800;
+const h = 800;
+barHeight = 25;
+
+let scale = d3.scaleLinear();
+scale
+.domain([10, 89561404])
+.range([5,600]);
+</textarea>
+            <p>Now we need to actually produce the bars that visualise our data</p>
+            <p>I cannot realistically cover all the aspects of the d3 library in this tutorial, i do plan to do so in the future because alot of it isnt documented well/taught well. I suggest to use my code for now and play around with some of the values, personally this is how i learnt to use d3. As a starting point i recommend <a href="https://www.freecodecamp.org/">FreeCodeCamp's</a> excellent tutorials on data visualisation which covers some basic tenets of the d3 library- for everything else theres stackExchange and Quora. :D</p>            
+<h2>Creating and appending an SVG to our html element.</h2>
+<textarea class="jsEditor">
+var graph = d3.select(".chart")
+    .attr("width", w)
+    .attr("height", h)
+    .append("svg")
+</textarea>
+<h2>Sorting the data and appending a bar graphic for each data object</h2>
+<textarea class="jsEditor">              
+var bar = graph.selectAll("g")
+    .data(dataset.sort(function(a, b){return b.pop-a.pop}))
+    .enter().append("g")
+    .attr("width", 1000);
+</textarea>
+<h2>Scaling the bar and setting appropraite x,y coordinates for each one</h2>
+<textarea class="jsEditor">
+bar.append("rect")
+    .style('width', d => `${scale(d.pop)}px`)
+    .attr("height", barHeight)
+    .attr("y", (d, i) => {return i*26 })
+</textarea>
+<h2>Adding some text showing the population of each country/bar at the end.</h2>
+<textarea class="jsEditor">
+bar.append("text")
+    .attr("x", function(d) { return (scale(d.pop) + 3); })
+    .attr("y", (d, i) => {return (i*26) + barHeight/2})
+    .attr("dy", ".35em")
+    .text(function(d) { return d.country + ": " + numberWithCommas(d.pop); 
+});
+</textarea>            
+            <h2>Hover function</h2>
+            <p>When we hover over a country we want it to be able to:</p>
+            <ul>
+                <li>Highlight the entire country</li>
+                <li>Show some information about that country</li>
+                <li>Be able to click select a country</li>
+                <li>when you hover over a country it should highlight a corresponding bar in the bar graph</li>
+            </ul>
+<textarea class="jsEditor">// first we need to declare an empty array - this will store properties of each country
+const stateMap = [];
+//The above map consists of SVG elements with a class of 'countries
+//We need to access each one and event listeners as follows
+let btns = document.getElementsByClassName("countries");
+Array.from(btns).forEach(function (i) {
+//Event listeners go in this loop
+}</textarea>
+            <p>Now lets add the first event listener which will check whether the mouse has entered a particular country. Remember that it goes inside the previous block of code</p>
+<textarea class="jsEditor">i.addEventListener('mouseenter', function() {
+    i.style.fill = 'orange';
+    d3.selectAll("rect")
+    .filter(function(d) { return d.country == i.id; })
+    .style("fill", "orange");
+    toolTipThingy(i.id);
+});</textarea>
+<p>We also need to check when a mouse leaves a particular country so that we can stop displaying the tooltip div</p>
+<textarea class="jsEditor">
+i.addEventListener('mouseleave', function() {
+    if (stateMap[i.id] != true){
+        i.style.fill = 'black';
+        //console.log(i);
+        d3.selectAll("rect")
+        .filter(function(d) { return d.country == i.id; })
+        .style("fill", "black");
+    } else {
+        i.style.fill = 'orange';
+    }
+});
+</textarea>
+<p>Next we need to make each country SVG clickable and selectable, it should also be able to toggle whether a country is selected or unselected by clicking</p>
+<textarea class="jsEditor">
+i.addEventListener('click', function(){
+    const state = stateMap[i.id];
+    if (state){
+        stateMap[i.id] = false;
+        i.style.fill = 'black';   
+    }
+    else{
+        stateMap[i.id] = true;
+        i.style.fill = 'orange';
+    }
+});
+</textarea>
+<h2>Congratulations you're all done!</h2>
+<h2>Further considerations</h2>
+<ul>
+    <li>The two tone color scheme is intuitive and at many stages throughout this i was compelled to change it but i think it lends a sense of simple comprehensibility which i think is necessary in a world full of confusing and overly confusing chloropleth data, color is a nice guide but we are better at determining data throught text and numbers rather than rgb values.</li>
+    <li>you may want to add some axies to the graph, i personally didnt think it was necessary as i think its simplicity lends to its readability.</li>
+    <li>it was really hard to incorporate outlier countries with tiny populations, i had to manipulate the map data in QGIS to exxaggerate the size of the Mauritian islands, it may be useful to indicate that they have been through some visual cues such as smaller maps overlayed with scale pointed out.</li>
+    <li>you may want the hover function to work on the bars as well.  i beleived i have explained enough so as for the reader to incorporate this functionality in their code</li>
+</ul>
+<p>I hope youve enjoyed this tutorial, made with human love and mechanical detail by Bilal Cassim.</p>
+        </div>
 
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script type="text/javascript" src="project1.js"></script>

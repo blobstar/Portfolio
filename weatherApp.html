@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>A Weather App</title>
+        <link rel="stylesheet" type="text/css" href="css/weatherApp.css">
+    </head>
+    <body>
+        <section class="top-banner">
+            <div class="container">
+              <h1 class="heading">Weather</h1>
+              <form>
+                <input type="text" placeholder="Search for a city" autofocus>
+                <button type="submit">SUBMIT</button>
+                
+                <span class="msg"></span>
+              </form>
+            </div>
+            <p class="instructions">SEARCH BY USING A CITY NAME (e.g. johannesburg) OR A COMMA-SEPARATED CITY NAME ALONG WITH THE COUNTRY CODE (e.g. johannesburg, za)</p>
+        </section>
+        <section class="ajax-section">
+            <div class="container">
+              <ul class="cities"></ul>
+            </div>
+        </section>
+        <script type="text/javascript" src="weatherApp.js"></script>
+    </body>
+</html>

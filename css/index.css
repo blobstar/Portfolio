@@ -3,6 +3,48 @@ body{
     margin:0px;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
+.gridproject {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+.projectlink:hover .gridproject {
+  opacity: 0.3;
+}
+.projectlink:hover .middle {
+  opacity: 1;
+}
+.text {
+  background-color: orange;
+  color: white;
+  font-size: 16px;
+  
+}
+.prof{
+    padding: 10px;
+}
+
+.wrapper {
+  padding: 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
 #navbar{
     height:90px;
     width:100%;

@@ -1,17 +1,38 @@
 h1{
+    font: 46px sans-serif;
+}
+h2{
     font: 36px sans-serif;
 }
+p{font: 26px sans-serif;}
+li{font: 26px sans-serif;}
+body{
+}
+.CodeMirror {
+    font: 26px sans-serif;
+    font-size: 26px;
+    border: 1px solid #eee;
+    height: auto;
+}
 #chart{
+    border-radius: 10px;
+    outline: auto;
+    outline-color: black;
+    outline-style: solid;
+    color: black;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 800px;
+    height: 1200px;
+    padding:25px;
 }
 .charts{
     width: 800px;
 }
 #barGraph{
     width: 800px;
-    height: 2000px;
+    
 }
 svg text {
     fill:black;
@@ -27,9 +48,15 @@ svg text {
     color: white;
 }
 .js--movey-thingy{
-
+    border-radius: 5px;
+    outline: auto;
+    outline-color: black;
+    outline-style: solid;
+    color: black;
+    padding: 5px;
 	position:absolute;
-	background-color:red;
+	background-color:orange;
+    pointer-events: none;
 }
   
 

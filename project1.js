@@ -5,11 +5,13 @@ hoverCountry.forEach(element => {
 }); //im trying to add an event listener to each one
 
  */
+// first we need to declare an empty array - this will store properties of each country
 const stateMap = [];
-
+//The above map consists of SVG elements with a class of 'countries
+//We need to access each one and event listeners as follows
 let btns = document.getElementsByClassName("countries");
 Array.from(btns).forEach(function (i) {
-    console.log(stateMap[i.id]); 
+    
   
     i.addEventListener('mouseenter', function() {
     i.style.fill = 'orange';
@@ -161,24 +163,53 @@ scale
 
 
 var graph = d3.select(".chart")
-.attr("width", w)
-              .attr("height", h)
-              .append("svg")
+    .attr("width", w)
+    .attr("height", h)
+    .append("svg")
               
-
-
 var bar = graph.selectAll("g")
-  .data(dataset.sort(function(a, b){return b.pop-a.pop}))
-  .enter().append("g")
-  .attr("width", 1000);
-  bar.append("rect")
-  .style('width', d => `${scale(d.pop)}px`)
-  .attr("height", barHeight)
-  .attr("y", (d, i) => {return i*26 })
-  bar.append("text")
-  
-  .attr("x", function(d) { return (scale(d.pop) + 3); })
-       .attr("y", (d, i) => {return (i*26) + barHeight/2})
-       .attr("dy", ".35em")
-       .text(function(d) { return d.country + ": " + numberWithCommas(d.pop); })
+    .data(dataset.sort(function(a, b){return b.pop-a.pop}))
+    .enter().append("g")
+    .attr("width", 1000);
+
+bar.append("rect")
+    .style('width', d => `${scale(d.pop)}px`)
+    .attr("height", barHeight)
+    .attr("y", (d, i) => {return i*26 })
+
+bar.append("text")
+    .attr("x", function(d) { return (scale(d.pop) + 3); })
+    .attr("y", (d, i) => {return (i*26) + barHeight/2})
+    .attr("dy", ".35em")
+    .text(function(d) { return d.country + ": " + numberWithCommas(d.pop); });
+
+/* var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+    mode: {name: "javascript", json: true},
+    theme: "dracula",
+    lineNumbers: true,
+    }); */
+
+var jsCodemirrorInstance = [];
+var jsonCodemirrorInstance = [];
+
+var foundJsEditor = document.getElementsByClassName('jsEditor');
+for(var i = 0; foundJsEditor[i]; ++i) { 
+  jsCodemirrorInstance[i] = CodeMirror.fromTextArea(foundJsEditor[i], {
+    mode: {name: "javascript", json: true},
+    theme: "dracula",
+    lineNumbers: true,   
+  });
+}
+
+var foundJsonEditor = document.getElementsByClassName('jsonEditor');
+for(var i = 0; foundJsonEditor[i]; ++i) { 
+  jsonCodemirrorInstance[i] = CodeMirror.fromTextArea(foundJsonEditor[i], {
+    mode: {name: "javascript", json: true},
+    theme: "dracula",
+    lineNumbers: true,   
+  });
+}
+
+
+
        
